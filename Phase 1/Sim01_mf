@@ -1,0 +1,22 @@
+CC = gcc
+DEBUG = -g
+CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
+
+Sim01 : functions.o simConfig.o simMetadata.o driver.o
+	$(CC) $(LFLAGS) functions.o simConfig.o simMetadata.o driver.o -o Sim01
+
+driver.o : driver.c driver.h
+	$(CC) $(CFLAGS) driver.c
+
+simMetadata.o : simMetadata.c simMetadata.h functions.h
+	$(CC) $(CFLAGS) simMetadata.c
+
+simConfig.o : simConfig.c simConfig.h functions.h
+	$(CC) $(CFLAGS) simConfig.c
+
+functions.o : functions.c functions.h
+	$(CC) $(CFLAGS) functions.c
+
+clean:
+	\rm *.o Sim01

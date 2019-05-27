@@ -1,0 +1,36 @@
+CC = gcc
+DEBUG = -g
+CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -Wall -std=c99 -pedantic -pthread $(DEBUG)
+
+Sim03 : functions.o simConfig.o simMetadata.o driver.o logList.o PCBList.o simtimer.o memManager.o
+	$(CC) $(LFLAGS) functions.o simtimer.o simConfig.o simMetadata.o memManager.o logList.o PCBList.o driver.o -o Sim03
+
+driver.o : driver.c driver.h
+	$(CC) $(CFLAGS) driver.c
+
+PCBList.o : PCBList.c PCBList.h simtimer.h functions.h
+	$(CC) $(CFLAGS) PCBList.c
+
+memManager.o : memManager.c memManager.h functions.h
+	$(CC) $(CFLAGS) memManager.c
+ 
+logList.o : logList.c logList.h functions.h
+	$(CC) $(CFLAGS) logList.c
+
+simMetadata.o : simMetadata.c simMetadata.h functions.h
+	$(CC) $(CFLAGS) simMetadata.c
+
+simConfig.o : simConfig.c simConfig.h functions.h
+	$(CC) $(CFLAGS) simConfig.c
+
+functions.o : functions.c functions.h
+	$(CC) $(CFLAGS) functions.c
+
+simtimer.o : simtimer.c simtimer.h functions.h
+	$(CC) $(CFLAGS) simtimer.c
+
+	$(CC) $(CFLAGS) functions.c
+
+clean:
+	\rm *.o Sim03
